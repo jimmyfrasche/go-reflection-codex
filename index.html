@@ -1171,7 +1171,7 @@ field := obj.FieldByName(&#34;Field&#34;)</code></pre>
 						<li><a href=#struct>Struct</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-numfield>Value.NumField</a></li><li><a href=#value-field>Value.Field</a></li><li><a href=#value-fieldbyname>Value.FieldByName</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-fieldbyindex>Value.FieldByIndex</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li>
+						<li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#value-numfield>Value.NumField</a></li><li><a href=#value-field>Value.Field</a></li><li><a href=#value-fieldbyname>Value.FieldByName</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-fieldbyindex>Value.FieldByIndex</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1249,7 +1249,7 @@ slice = reflect.Append(slice, a, b)</code></pre>
 						<li><a href=#slice>Slice</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-append>reflect.Append</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-append>reflect.Append</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1407,7 +1407,7 @@ a.SetString(&#34;π≈3.1415&#34;)</code></pre>
 						<li><a href=#any-kind>Any kind</a></li><li><a href=#primitive-types>Primitive types</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-setuint>Value.SetUint</a></li><li><a href=#value-overflowint>Value.OverflowInt</a></li><li><a href=#value-overflowuint>Value.OverflowUint</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#value-setfloat>Value.SetFloat</a></li><li><a href=#value-overflowfloat>Value.OverflowFloat</a></li><li><a href=#value-setint>Value.SetInt</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-canset>Value.CanSet</a></li><li><a href=#value-setcomplex>Value.SetComplex</a></li>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-canset>Value.CanSet</a></li><li><a href=#value-setcomplex>Value.SetComplex</a></li><li><a href=#value-setuint>Value.SetUint</a></li><li><a href=#value-overflowint>Value.OverflowInt</a></li><li><a href=#value-overflowuint>Value.OverflowUint</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#value-setfloat>Value.SetFloat</a></li><li><a href=#value-overflowfloat>Value.OverflowFloat</a></li><li><a href=#value-setint>Value.SetInt</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1455,7 +1455,7 @@ default:
 						<li><a href=#chan>Chan</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-trysend>Value.TrySend</a></li><li><a href=#value-tryrecv>Value.TryRecv</a></li>
+						<li><a href=#value-tryrecv>Value.TryRecv</a></li><li><a href=#value-trysend>Value.TrySend</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1616,7 +1616,7 @@ schan  := reflect.ChanOf(reflect.SendDir, T)</code></pre>
 						<li><a href=#any-kind>Any kind</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-mapof>reflect.MapOf</a></li><li><a href=#reflect-bothdir>reflect.BothDir</a></li><li><a href=#reflect-ptrto>reflect.PtrTo</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-chanof>reflect.ChanOf</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li><li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-recvdir>reflect.RecvDir</a></li><li><a href=#reflect-sliceof>reflect.SliceOf</a></li><li><a href=#reflect-senddir>reflect.SendDir</a></li><li><a href=#reflect-map>reflect.Map</a></li>
+						<li><a href=#reflect-mapof>reflect.MapOf</a></li><li><a href=#reflect-bothdir>reflect.BothDir</a></li><li><a href=#reflect-ptrto>reflect.PtrTo</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-chanof>reflect.ChanOf</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li><li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-recvdir>reflect.RecvDir</a></li><li><a href=#reflect-sliceof>reflect.SliceOf</a></li><li><a href=#reflect-senddir>reflect.SendDir</a></li><li><a href=#reflect-map>reflect.Map</a></li><li><a href=#reflect-type>reflect.Type</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1668,7 +1668,7 @@ indexable.SetMapIndex(index, value)</code></pre>
 						<li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li><li><a href=#map>Map</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-index>Value.Index</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-setmapindex>Value.SetMapIndex</a></li>
+						<li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-setmapindex>Value.SetMapIndex</a></li><li><a href=#value-index>Value.Index</a></li><li><a href=#value-set>Value.Set</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1910,7 +1910,7 @@ obj.MethodByName(&#34;Method&#34;).Call(nil)</code></pre>
 						<li><a href=#func>Func</a></li><li><a href=#method>Method</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-call>Value.Call</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#value-method>Value.Method</a></li><li><a href=#value-methodbyname>Value.MethodByName</a></li><li><a href=#value-nummethod>Value.NumMethod</a></li>
+						<li><a href=#value-method>Value.Method</a></li><li><a href=#value-methodbyname>Value.MethodByName</a></li><li><a href=#value-nummethod>Value.NumMethod</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-call>Value.Call</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -1997,7 +1997,7 @@ obj.MethodByName(&#34;Method&#34;).Call(nil)</code></pre>
 						<li><a href=#map>Map</a></li><li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li><li><a href=#chan>Chan</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-recv>Value.Recv</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-mapkeys>Value.MapKeys</a></li>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-mapkeys>Value.MapKeys</a></li><li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-recv>Value.Recv</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2122,7 +2122,7 @@ chan0 := reflect.MakeChan(S, 0)</code></pre>
 						<li><a href=#chan>Chan</a></li><li><a href=#map>Map</a></li><li><a href=#slice>Slice</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-makemap>reflect.MakeMap</a></li><li><a href=#reflect-makeslice>reflect.MakeSlice</a></li><li><a href=#reflect-makechan>reflect.MakeChan</a></li><li><a href=#reflect-type>reflect.Type</a></li>
+						<li><a href=#reflect-makechan>reflect.MakeChan</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-makemap>reflect.MakeMap</a></li><li><a href=#reflect-makeslice>reflect.MakeSlice</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2280,7 +2280,7 @@ p := new(T)</code></pre>
 						<li><a href=#slice>Slice</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-set>Value.Set</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-cap>Value.Cap</a></li><li><a href=#value-setlen>Value.SetLen</a></li>
+						<li><a href=#value-cap>Value.Cap</a></li><li><a href=#value-setlen>Value.SetLen</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#reflect-value>reflect.Value</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2447,7 +2447,7 @@ case 3:
 						<li><a href=#chan>Chan</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#value-send>Value.Send</a></li><li><a href=#value-recv>Value.Recv</a></li>
+						<li><a href=#value-recv>Value.Recv</a></li><li><a href=#value-send>Value.Send</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2495,7 +2495,7 @@ case 3:
 						<li><a href=#any-kind>Any kind</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#type-convertibleto>Type.ConvertibleTo</a></li><li><a href=#reflect-type>reflect.Type</a></li>
+						<li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#type-convertibleto>Type.ConvertibleTo</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2572,7 +2572,7 @@ case 3:
 						<li><a href=#interface>Interface</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-type>reflect.Type</a></li><li><a href=#value-int>Value.Int</a></li><li><a href=#value-caninterface>Value.CanInterface</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-elem>Value.Elem</a></li><li><a href=#value-interface>Value.Interface</a></li>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-elem>Value.Elem</a></li><li><a href=#value-interface>Value.Interface</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#value-int>Value.Int</a></li><li><a href=#value-caninterface>Value.CanInterface</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2619,7 +2619,7 @@ case 3:
 						<li><a href=#any-kind>Any kind</a></li><li><a href=#primitive-types>Primitive types</a></li>
 					</ul>
 					<ul class=uses>
-						<li><a href=#reflect-interface>reflect.Interface</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-array>reflect.Array</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li><li><a href=#reflect-int>reflect.Int</a></li><li><a href=#reflect-kind>reflect.Kind</a></li><li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-struct>reflect.Struct</a></li><li><a href=#reflect-func>reflect.Func</a></li><li><a href=#reflect-map>reflect.Map</a></li><li><a href=#type-kind>Type.Kind</a></li>
+						<li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-struct>reflect.Struct</a></li><li><a href=#reflect-func>reflect.Func</a></li><li><a href=#reflect-map>reflect.Map</a></li><li><a href=#type-kind>Type.Kind</a></li><li><a href=#reflect-interface>reflect.Interface</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-array>reflect.Array</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li><li><a href=#reflect-int>reflect.Int</a></li><li><a href=#reflect-kind>reflect.Kind</a></li>
 					</ul>
 					<a href=#top>top</a>
 				</footer>
@@ -2672,7 +2672,7 @@ case 3:
 				title="Creative Commons Attribution-ShareAlike 3.0 Unported License"><img alt="Creative Commons License"
 				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAALCAMAAADsveWiAAAAllBMVEUAAAANDQwNDQ0NDg0ODg4PEA8REREZGRkgICAhISEiIiIkJSMnKCcuMC4xMzEzMzM5Ozk7PTtBQkFCQkJDQ0NERERLTEtVVVVbXltmZmZna2dydnF3d3eAgIB9gn2GhoaHh4eIiIiPkI+UmZOZmZmqqqqrsaqzuLK7u7u6v7rFxsXGysbIzMjMzMzKzsrd3d3p6enq6uq8qbpVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVQoz52SaxeCIAyGl5qVXexGZtHF1HW1xv//c4Eo6qc47QCHM3j2bgNAZTtISBvzUsR3H36awlKvxiQ4Qbwf7LjFyGBUwBbxtbHi3ISKAJhgEBTEZjLRizqSUeQCejYOqrkj3CiIiHNfZDlxVyb6AH29HAZrnCW3h0KoxkShSpR7iNenCV8pkl7LHXX1WOwLnhF3unpGTrtaeugklPsQy/rCD62nnfpaXF2v4ebD//qZ9s6GW43t30925lRhy4Hdf/kCHuYpvVY9mFwAAAAASUVORK5CYII="
 			></a>
-			<a href=https://github.com/JImmyFrasche/go-reflection-codex/graphs/contibutors>Contributors</a> |
+			<a href=https://github.com/JImmyFrasche/go-reflection-codex/graphs/contributors>Contributors</a> |
 			<a href=https://github.com/JImmyFrasche/go-reflection-codex/issues>Issue Queue</a> |
 			<a href=https://github.com/JImmyFrasche/go-reflection-codex>Project page</a>
 		</footer>
