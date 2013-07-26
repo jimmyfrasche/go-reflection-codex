@@ -1,9 +1,0 @@
-Append
-Slice
-Append to a slice.
-===
-	slice = append(slice, 1, 2)
-===
-	a := reflect.ValueOf(1)
-	b := reflect.ValueOf(2)
-	slice = reflect.Append(slice, a, b)
