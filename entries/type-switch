@@ -1,0 +1,17 @@
+Type switch
+Any kind, Primitive types
+===
+	switch v.(type) {
+		...
+	}
+===
+Given a reflect.Value v:
+
+	switch v.Type().Kind() {
+		...
+	}
+
+Type.Kind returns one of a set of constants defined under reflect.Kind. For
+the primitive types, the type switch is normal. Special handling is needed for
+each of reflect.Array, reflect.Chan, reflect.Func, reflect.Interface,
+reflect.Map, reflect.Ptr, reflect.Slice, and reflect.Struct.

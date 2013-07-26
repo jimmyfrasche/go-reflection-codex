@@ -1,0 +1,20 @@
+Invoke a method
+Func,Method
+===
+	Object.Method()
+===
+Given an object with a method of a known name, use Value.MethodByName
+	obj := reflect.ValueOf(Object)
+	obj.MethodByName("Method").Call(nil)
+
+If Method is the 2nd method on obj, this is equivalent:
+	obj.Method(1).Call(nil)
+
+Value.Method will panic if there is no nth method, so use Value.NumMethod to
+make sure that
+	n < obj.NumMethod()
+
+Invoking a method is essentially the same as calling a function. See that section for more information on Value.Call.
+
+The method's receiver will always be the reflect.Value that you called
+Method or MethodByName on.

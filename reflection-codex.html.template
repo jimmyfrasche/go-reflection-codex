@@ -1,0 +1,407 @@
+<!doctype HTML>
+<html lang=en>
+	<head>
+		<meta charset=utf-8>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<meta name=description content="A series of short articles mapping Go (golang) syntax to Go's reflect package.">
+		<title>Go Reflection Codex</title>
+		<style>
+			/*bits liberally picked from normalice.css MIT License got.io/normalize USE IT*/
+			html{
+				color:#333;
+				background:#f2f0fe url(data:image/png;base64,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);
+				font-family:serif;
+				font-size:18px;
+				line-height:1.1;
+			}
+			body{
+				background:#feffff;
+				margin:.5em auto;
+				max-width:41em;
+				padding-left:.5em;
+				padding-right:.5em;
+				border-radius:1em;
+				border:1px solid #deddfd;
+			}
+			a:focus,
+			a:active,
+			a:hover{
+				outline:0;
+				text-decoration:underline;
+				color:#505eff;
+			}
+			h1{
+				font-size:2em;
+				margin:0.67em 0;
+				color:#626683;
+			}
+			code{
+				font-family:monospace;
+			}
+			pre{
+				white-space:pre-wrap;
+				background:#e9e9e9;
+				padding:1em;
+				border-radius:.5em;
+			}
+
+			::selection{
+				background:rgba(255,252,127,.8);
+			}
+			::-moz-selection{
+				background:rgba(255,252,127,.8);
+			}
+			body>header>h1{
+				text-shadow:1px 2px 3px #aaa;
+				margin-top:.3em;
+				margin-bottom:.1em;
+			}
+			body>header>h1,
+			#skip{
+				text-align:right;
+				margin-right:2rem;
+			}
+			body>header>h1::-moz-selection{
+				text-shadow:none;
+			}
+			body>header>h1::selection{
+				text-shadow:none;
+			}
+			p{
+				line-height:1.6;
+			}
+			nav{
+				font-size:88%;
+			}
+			nav a{
+				display:block;
+				padding:2px;
+				padding-bottom:10px;
+			}
+			nav li{
+				display:inline-block;
+				vertical-align:top;
+				width:32%;
+			}
+			nav dt{
+				cursor:pointer;
+				padding-bottom:4px;
+			}
+			nav dt:not(:first-child) {
+				margin-top:6px;
+			}
+			nav h1{
+				font-size:.95rem;
+				border:1px solid #626683;
+				border-radius:3px;
+				padding:3px;
+			}
+			body>footer{
+				margin:1em;
+				font-size:70%;
+			}
+			a,
+			h1 a:focus,
+			h1 a:active,
+			h1 a:hover{
+				text-decoration:none;
+			}
+			a:visited{
+				color:#7450ff;
+			}
+			ul{
+				margin:0;
+				padding:0;
+			}
+			li{
+				list-style:none;
+			}
+			main li{
+				display:inline-block;
+				margin-right:2px;
+				margin-left:2px;
+			}
+			main li:not(:first-child):before{
+				content:' | ';
+			}
+			#skip{
+				color:#6e6f6f;
+			}
+			#skip a,
+			#skip a:visited,
+			.go h1,
+			.reflect h1,
+			h1 a,
+			h1 a:visited,
+			article a[href="#top"],
+			article a[href="#top"]:visited,
+			main ul{
+				font-size:70%;
+				color:#6e6f6f;
+				margin-bottom:.4em;
+			}
+			#skip,
+			h1 a,
+			h1 a:visited,
+			article a[href="#top"],
+			article a[href="#top"]:visited,
+			main ul,
+			nav{
+				-ms-user-select:none;
+				-moz-user-select:-moz-none;
+				-moz-user-select:none;
+				-webkit-user-select:none;
+				user-select:none;
+			}
+			h1 a{
+				padding-left:.5em;
+			}
+			.go h1,
+			.reflect h1{
+				font-weight:normal;
+				color:#333;
+				display:block;
+			}
+			.uses,
+			.tags{
+				margin-left:3em;
+			}
+			a[href="#top"]:before{
+				content:'↑';
+			}
+			#skip a[href="#top"]:before{
+				content:'';
+			}
+			a[href="#top"]:hover:before{
+				text-decoration:none;
+			}
+			a[href="#top"]:before,
+			.collapsible:before{
+				color:#999;
+				padding-right:3px;
+				font-size:70%;
+			}
+			.collapsible:before{
+				content:'↓';
+			}
+			.collapsible.collapsed:before{
+				content:'→';
+			}
+			dd.collapsed{
+				display:none;
+			}
+			.uses:before,
+			.tags:before{
+				display:inline-block;
+				padding-right:4px;
+				margin-left:-2em;
+			}
+			.uses:before{
+				content:'uses: ';
+			}
+			.tags:before{
+				content:'tags: ';
+			}
+			article{
+				box-shadow:0 4px 6px -5px #626683;
+				padding-bottom:8px;
+			}
+			a[rel=license] img{
+				padding:1px;
+				border:1px solid #000;
+			}
+			body>footer a:first-child{
+				margin-right:10px;
+			}
+			body>footer a,
+			body>footer a:visited,
+			body>footer a:hover{
+				color:#333;
+				display:inline-block;
+				vertical-align:middle;
+			}
+			@media print{
+				*{
+					border:0 !important;
+					background:#fff !important;
+					background-image:none !important;
+					color:#000 !important;
+					box-shadow:none !important;
+					text-shadow:none !important;
+				}
+				body{
+					max-width:95% !important;
+				}
+				footer{
+					margin-bottom:0 !important;
+				}
+				ul{
+					margin:0 !important;
+					padding;0 !important;
+				}
+				a[href^=http]:after{
+					content:' (' attr(href) ')';
+				}
+				nav,
+				#skip,
+				.tags,
+				.uses,
+				h1 a,
+				article a[href="#top"]{
+					display:none !important;
+				}
+				code{
+					page-break-inside:avoid;
+				}
+				article>h1{
+					page-break-after:avoid;
+				}
+				h1{
+					font-size:1.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Go Reflection Codex</h1>
+			<div id=skip>
+				<a href=#top>skip to navigation</a> |
+				<a href=#main>skip to articles</a>
+			</div>
+			<p>
+				<a href=http://golang.org title="Go project page">Go</a>'s
+				<a href=http://golang.org/pkg/reflect title="official docs">reflect</a>
+				package is powerful, it mirrors the semantics of the language
+				closely, and it is designed to be fast. Unfortunately,
+				the efficiency of it design does not lend its API to quick
+				discovery. This loose collection of short articles is offered
+				up as a learning aid and quick reference, in conjunction with
+				the standard documentation.
+			</p>
+			<p>
+				You should read at the very least the intro to the reflect
+				package and be familiar with the rules and concepts of
+				<a href=http://golang.org/ref/spec#Assignability title="Language specification">assignability</a>
+				and
+				<a href=http://golang.org/ref/spec#Address_operators title="Language specification">addressability</a>
+				in Go.
+			</p>
+			<p>
+				Each article contains some snippets of Go code followed
+				by the equivalent code using the reflect package.
+			</p>
+		</header>
+		<nav id=top role=navigation>
+			<ul>
+				<li id=by-title>
+					<h1>Table of Contents</h1>
+					<div class=pane>
+						{{range .Articles}}
+							<a href=#{{.Title|dashify}}>{{.Title}}</a>
+						{{end}}
+					</div>
+				</li>
+				<li id=by-topic>
+					<h1>by Topic</h1>
+					<dl class=pane>
+						{{range .TopicSort}}
+							<dt class=collapsible id={{.|dashify}}>{{.}}</dt>
+							{{range .|topicsOf}}
+								<dd><a href=#{{.Title|dashify}}>{{.Title}}</a></dd>
+							{{end}}
+							</dt>
+						{{end}}
+					</dl>
+				</li>
+				<li id=by-use>
+					<h1>by Use</h1>
+					<dl class=panel>
+						{{range .UsesSort}}
+							<dt class=collapsible id={{.|dashify}}>{{.}}</dt>
+							{{range .|usesOf}}
+								<dd><a href=#{{.Title|dashify}}>{{.Title}}</a></dd>
+							{{end}}
+							</dt>
+						{{end}}
+					</dl>
+				</li>
+			</ul>
+			<script>
+				"use strict";
+				function all(sel, func) {
+					//javascript
+					Array.prototype.slice.call(document.querySelectorAll(sel), 0).forEach(func);
+				}
+				function toggle(ev) {
+					dt(ev.target);
+				}
+				function dt(n) {
+					n.classList.toggle('collapsed');
+					for(n = n.nextSibling; n.nodeName != 'DT'; n = n.nextSibling) {
+						n.hidden = !n.hidden;
+					}
+				}
+				window.onhashchange = function() {
+					var n = document.querySelector(location.hash);
+					if(n['nodeName'] == 'DT') {
+						dt(n);
+					}
+				};
+				all('dd', function(dd) {
+					dd.hidden = true;
+				});
+				all('dt', function(dt) {
+					dt.classList.add('collapsed');
+					dt.addEventListener('click', toggle);
+				});
+			</script>
+		</nav>
+		<main id=main role=main>
+			{{range .Articles}}<article id={{.Title|dashify}} role=article>
+				<header>
+					<h1>{{.Title}}<a href=#{{.Title|dashify}}>#</a></h1>
+					{{range .Intro}}<p>{{.}}</p>{{end}}
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					{{range .GoCode}}
+						{{if .Code}}
+							<pre><code>{{.}}</code></pre>
+						{{else}}
+							<p>{{.}}</p>
+						{{end}}
+					{{end}}
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					{{range .ReflectCode}}
+						{{if .Code}}
+							<pre><code>{{.}}</code></pre>
+						{{else}}
+							<p>{{.}}</p>
+						{{end}}
+					{{end}}
+				</section>
+				<footer>
+					<ul class=tags>
+						{{range .Tags}}<li><a href=#{{.|dashify}}>{{.}}</a></li>{{end}}
+					</ul>
+					<ul class=uses>
+						{{range .Uses}}<li><a href=#{{.|dashify}}>{{.}}</a></li>{{end}}
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article>{{end}}
+		</main>
+		<footer>
+			<a rel=license href=http://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+				title="Creative Commons Attribution-ShareAlike 3.0 Unported License"><img alt="Creative Commons License"
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAALCAMAAADsveWiAAAAllBMVEUAAAANDQwNDQ0NDg0ODg4PEA8REREZGRkgICAhISEiIiIkJSMnKCcuMC4xMzEzMzM5Ozk7PTtBQkFCQkJDQ0NERERLTEtVVVVbXltmZmZna2dydnF3d3eAgIB9gn2GhoaHh4eIiIiPkI+UmZOZmZmqqqqrsaqzuLK7u7u6v7rFxsXGysbIzMjMzMzKzsrd3d3p6enq6uq8qbpVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVQoz52SaxeCIAyGl5qVXexGZtHF1HW1xv//c4Eo6qc47QCHM3j2bgNAZTtISBvzUsR3H36awlKvxiQ4Qbwf7LjFyGBUwBbxtbHi3ISKAJhgEBTEZjLRizqSUeQCejYOqrkj3CiIiHNfZDlxVyb6AH29HAZrnCW3h0KoxkShSpR7iNenCV8pkl7LHXX1WOwLnhF3unpGTrtaeugklPsQy/rCD62nnfpaXF2v4ebD//qZ9s6GW43t30925lRhy4Hdf/kCHuYpvVY9mFwAAAAASUVORK5CYII="
+			></a>
+			<a href=https://github.com/TODO/graphs/contibutors>Contributors</a> |
+			<a href=https://github.com/TODO/issues>Issue Queue</a> |
+			<a href=https://github.com/TODO>Project page</a>
+		</footer>
+	</body>
+</html>

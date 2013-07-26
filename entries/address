@@ -1,0 +1,14 @@
+Address
+Pointers
+===
+	v := &value
+===
+Given a variable value of type reflect.Value.
+
+	v := value.Addr()
+
+Value.Addr will panic if value is not addressable. To check, use Value.CanAddr
+
+	if value.CanAddr() {
+		v = value.Addr()
+	}

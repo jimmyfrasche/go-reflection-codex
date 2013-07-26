@@ -1,0 +1,46 @@
+Iteration
+Map, Array, Slice, Chan
+==
+	for i := range iterable {
+		//body
+	}
+
+	for k, v := range iterable {
+		//body
+	}
+
+==
+
+For arrays and slices simple iteration is straightforward.
+
+	for i := 0; i < iterable.Len(); i++ {
+		//body
+	}
+
+	for i := 0; i < iterable.Len(); i++ {
+		v := iterable.Index(i)
+		//body
+	}
+
+For maps, you must first call Value.MapKeys which returns a slice of reflect.Values
+and use Value.MapIndex on the items of the slice to get the value of the map at that key.
+
+	for _, key := range iterable.MapKeys() {
+		//body
+	}
+
+	for _, key := range iterable.MapKeys() {
+		v := iterable.MapIndex(key)
+		//body
+	}
+
+Channels are more verbose. Value.Recv() returns a reflect.Value and a boolean where the
+boolean is false if the reflected channel has been closed.
+
+	for {
+		v, ok := iterable.Recv()
+		if !ok {
+			break
+		}
+		//body
+	}

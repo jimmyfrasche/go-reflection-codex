@@ -1,0 +1,31 @@
+Access a Field
+Struct
+===
+	Object.Field
+===
+Given an object with a field of a known name, use Value.FieldByName
+	obj := reflect.ValueOf(Object)
+	field := obj.FieldByName("Field")
+
+If Field were the 2nd field on obj, this would be equivalent:
+	field := obj.Field(1)
+
+Value.Field will panic if there is no nth field, so use Value.NumField to
+make sure that
+	n < obj.NumField()
+
+There is also a Value.FieldByIndex, which takes a slice of int's. For each int
+in the slice, it calls Field on, first, the reflect.Value it was invoked on, and after that on the result of the last invocation of Field. So
+	obj.Field(1)
+is equivalent to
+	obj.Field([]int{1})
+and
+	obj.Field([]int{1, 2, 3})
+is equivalent to
+	obj.Field(1).Field(2).Field(3)
+
+FieldByIndex is primarily useful if you are keeping analysis of a type separate
+from manipulation of values of that type. This is common, for example, in
+serialization code that builds a table of what to serialize given a type and
+then given a value looks the type up in a table and processes the entry using
+the already computed recipe.

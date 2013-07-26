@@ -1,0 +1,8 @@
+New
+Any kind
+==
+	p := &T{}
+	//	or
+	p := new(T)
+===
+	p := reflect.New(T)
