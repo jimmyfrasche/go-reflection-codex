@@ -1,0 +1,2680 @@
+<!doctype HTML>
+<html lang=en>
+	<head>
+		<meta charset=utf-8>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<meta name=description content="A series of short articles mapping Go (golang) syntax to Go's reflect package.">
+		<title>Go Reflection Codex</title>
+		<style>
+			 
+			html{
+				color:#333;
+				background:#f2f0fe url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAIH0lEQVRYw21Y2W4bORAsXnNLcZD8bz43D4ENW9LM8OY+ONVLedeA4USag+yuq6lut9uvcRxxnieMMYgxYpompJQwDANKKUgpQWsNYwxyztBaQymFWiuMMVBKYRgG7PuOWiuGYYC1FgCglEIIAVprtNYwjiMAIIQAa6385X05ZxhjcJ4n5nmGtdbKS5RSuFwu8N5DKYWcM5xzAPB0M394X0oJOWcopWCMQWsNSim5ZpomKKVQSkEpBed5YhgGpJQwjiNSSgAArTVSSrDWYts2eO+hQwiIMaK1hlorUkpwzmGaJnlY/3K+yForLxmGAcYYDMOA1hq01rjdbgghoJSCnLP8ZRX5a62VdwLAtm14PB6otcI5B83KLcsCYwxKKWitIYSAcRyhtca6riilQGsN5xycc1K1vjr83lqLeZ4BAOd5wnuPUgoASHW998g5I8aIZVkAALVWtNae4GL5H2MMtNbQWiPGiHmepar3+10wZYxBrVUqYq0VKNxuNyzLIlWKMaLWim/fvkn1vPdY1xVaawBAKQW1VszzjPf3d7TWMM+zFMqyeq01+ZAVYrvGcRQwt9Zkoa012RjbfBwHpmlCjBHOOdRaEWNEjBHGGIzjiFqrkM4Yg5QS9n3H9+/fcRyHtLeUAs0PWmtYlgXzPOM8T5RS5KEpJZznKUwkUXidUkpaNwwDQgiy0XEcBbNsaYwRIQSc54mUEo7jQGtNOkkutNY+W8ydE6zWWiilpE3zPGPbNgAQ1tVasa6rVJNEIPC5GLb7fr8DAC6XC3LOAgtuusch5a2UAs3VTtMkX87z/HQjW8uy11qFhVpr5JyRUnoii7UWpRSpzrZtGIYBtVa5LsaI4zgwzzNCCMJedsgYA82XABAihBBkd9wNAU/spJTgvUdrDeu6YhgGkafzPEXIh2HAcRyw1opSEGOsLj/rKy8y01oTJac09AyOMUJrjW3bEEJACEE0j45D7LTWcBzH06KoCm9vbziOQ4Sdm1dKPckXpWieZ+z7Dg1AFsF/U0ZqrdIS7z2stXDOIYQg114uF6koq8BNsoLX61WciqJfShEy8X0pJXEVqobOOf9HNiiqSinBCdtJRnLBPeZoVdRILooY995LFY0x4iJaa5RSpO3LsgiT7TRNT5bknEPOWQDNXzqGcw77vj8BvtYK7z22bYNSSlo/jqNcS5t0ziHGKKRitciFaZrEAKy10H1SYUphC87zlKBA8Q4hyOLYHu895nkWtyilPOkhIcHFkGysutYab29vYp18bs4Z1jmH4zhE4/hl788EunPuadcU8lor9n3HNE0iV4xlTEH0bm7Oew/nHIZhkMW21kRPSRbNeFNKwe12e2KRcw7ee9k1q+29F0EexxHX6xXruspiKbjeeyFKn1z4TtomgwFxz02O4/iZZphY6LnGGHx8fCCEgOv1Kjf2AbOvjvdeYEL3YEd6jM7zjHVdZWPzPMumW2vC4PM85V5NS/HeS7jUWmNZFtkJ2UUZGYZBKk0P/vj4EE/+mv/I0I+PD+z7DgA4jgPHcUBr/eQeLEAXVrRICLWNeKGRf02+MUZZ4DRNgiVqGRdaSpHEYozBsizCVlaI11CuGLWozZq9nqZJRJaYFKD+1SlWjmRiO0gy6hvxxMRNEWeSYXX4LroGdZch13v/mWYoH2wfU0nOWeyPIs5riUG2h1VY11U6QljwHb2M0FVIqHVdn1LSNE2f1WalWGLSnztmiOXCGCScc6KTZCgXSZ1jZKNs0bGoqUop7PsugYPP7XOoJQaoh9QlpRS2bROh5c601jKV0ca4IYaMfjqjHjJw9KzlBh6Px5MF9oVQf/78+SW28pdRZG4/jvbjJduvtZbFk4X93MvvGUa5OFoZK8V2kziUJgDQbAvbSceIMcqiAIhgA5BETHliqGXl2W5ukjLDIZ7k6GXKWiuHB4RDKQV6WRY457BtGy6XiwTRfd8lRMQYxaYoxqwczZ2ECCHgfr9Lpfps2fsv3Yok4ebO8xSYSGBl3uP8wbmEgYAi/ng8ZLec3Cg9lJV+lMw5S7pmTOPnbCOr+zXisbo6pSQenFISgXx5eXnStPv9DmMMvPcA8DSfyIDzP2ToNZXnLewUu8JgMk0ThmHAsiyySA1AwiSnfKYXlv04DlyvV0zTJJkPAK7X69MgT8l4f38XDDIDUlsZgMlY2mg//oYQ/rU6TlzjOMrLOTAR5C8vLxLR+7m2rxoPloi7PnUzCMtpwV/HijEK1ulO7AaJKmmGKbiUgsfjIVGJ1O+nP2rnOI74/fu3DFG9ZJRSwLSec37ydC6AQZhOw82QNMuyfB59nOcpYkt3YGupSyQAccQdTtMEADJHEPxkLivFKZB6R7Wg9VG+WF0+37KVjFJsD32RQWHfd2nDOI7CbFaE5GHb+klOJOPLkN/PxH06X9dVAoimGHPX1CFOXUw6xCMHa76YYCeoa634+fOnLIK69/U+tpK401rLfN0rgP0aq+Z5lvTLllMqmHbYJp6KEiJMIP3Ja3+aQE3sTzH4Q9GmlDH6a5650L56EjjnsK7rU5glHN7f3wWPZHLPckYv5jweTJJE3nvc73c58+lDMOcbpRQsj9tYkZwzrter6BGPI2hrMUZs2yaR6fX1VSY/Hnc8Hg+RE2oqN9i3nI5FnPdJaRiGz+v5ULaLN9C4iT3v/ZMUUBoo9Pf7XbLfjx8/BE/Utf544+XlRZzr/8Iv7VcpBUsGLcsigOdOc854fX2VHbHabAWzI+WBFeZRBw83qRD99NaLNRlOgvBHa41/AH98vuU/nQzmAAAAAElFTkSuQmCC);
+				font-family:serif;
+				font-size:18px;
+				line-height:1.1;
+			}
+			body{
+				background:#feffff;
+				margin:.5em auto;
+				max-width:41em;
+				padding-left:.5em;
+				padding-right:.5em;
+				border-radius:1em;
+				border:1px solid #deddfd;
+			}
+			a:focus,
+			a:active,
+			a:hover{
+				outline:0;
+				text-decoration:underline;
+				color:#505eff;
+			}
+			h1{
+				font-size:2em;
+				margin:0.67em 0;
+				color:#626683;
+			}
+			code{
+				font-family:monospace;
+			}
+			pre{
+				white-space:pre-wrap;
+				background:#e9e9e9;
+				padding:1em;
+				border-radius:.5em;
+			}
+
+			::selection{
+				background:rgba(255,252,127,.8);
+			}
+			::-moz-selection{
+				background:rgba(255,252,127,.8);
+			}
+			body>header>h1{
+				text-shadow:1px 2px 3px #aaa;
+				margin-top:.3em;
+				margin-bottom:.1em;
+			}
+			body>header>h1,
+			#skip{
+				text-align:right;
+				margin-right:2rem;
+			}
+			body>header>h1::-moz-selection{
+				text-shadow:none;
+			}
+			body>header>h1::selection{
+				text-shadow:none;
+			}
+			p{
+				line-height:1.6;
+			}
+			nav{
+				font-size:88%;
+			}
+			nav a{
+				display:block;
+				padding:2px;
+				padding-bottom:10px;
+			}
+			nav li{
+				display:inline-block;
+				vertical-align:top;
+				width:32%;
+			}
+			nav dt{
+				cursor:pointer;
+				padding-bottom:4px;
+			}
+			nav dt:not(:first-child) {
+				margin-top:6px;
+			}
+			nav h1{
+				font-size:.95rem;
+				border:1px solid #626683;
+				border-radius:3px;
+				padding:3px;
+			}
+			body>footer{
+				margin:1em;
+				font-size:70%;
+			}
+			a,
+			h1 a:focus,
+			h1 a:active,
+			h1 a:hover{
+				text-decoration:none;
+			}
+			a:visited{
+				color:#7450ff;
+			}
+			ul{
+				margin:0;
+				padding:0;
+			}
+			li{
+				list-style:none;
+			}
+			main li{
+				display:inline-block;
+				margin-right:2px;
+				margin-left:2px;
+			}
+			main li:not(:first-child):before{
+				content:' | ';
+			}
+			#skip{
+				color:#6e6f6f;
+			}
+			#skip a,
+			#skip a:visited,
+			.go h1,
+			.reflect h1,
+			h1 a,
+			h1 a:visited,
+			article a[href="#top"],
+			article a[href="#top"]:visited,
+			main ul{
+				font-size:70%;
+				color:#6e6f6f;
+				margin-bottom:.4em;
+			}
+			#skip,
+			h1 a,
+			h1 a:visited,
+			article a[href="#top"],
+			article a[href="#top"]:visited,
+			main ul,
+			nav{
+				-ms-user-select:none;
+				-moz-user-select:-moz-none;
+				-moz-user-select:none;
+				-webkit-user-select:none;
+				user-select:none;
+			}
+			h1 a{
+				padding-left:.5em;
+			}
+			.go h1,
+			.reflect h1{
+				font-weight:normal;
+				color:#333;
+				display:block;
+			}
+			.uses,
+			.tags{
+				margin-left:3em;
+			}
+			a[href="#top"]:before{
+				content:'↑';
+			}
+			#skip a[href="#top"]:before{
+				content:'';
+			}
+			a[href="#top"]:hover:before{
+				text-decoration:none;
+			}
+			a[href="#top"]:before,
+			.collapsible:before{
+				color:#999;
+				padding-right:3px;
+				font-size:70%;
+			}
+			.collapsible:before{
+				content:'↓';
+			}
+			.collapsible.collapsed:before{
+				content:'→';
+			}
+			dd.collapsed{
+				display:none;
+			}
+			.uses:before,
+			.tags:before{
+				display:inline-block;
+				padding-right:4px;
+				margin-left:-2em;
+			}
+			.uses:before{
+				content:'uses: ';
+			}
+			.tags:before{
+				content:'tags: ';
+			}
+			article{
+				box-shadow:0 4px 6px -5px #626683;
+				padding-bottom:8px;
+			}
+			a[rel=license] img{
+				padding:1px;
+				border:1px solid #000;
+			}
+			body>footer a:first-child{
+				margin-right:10px;
+			}
+			body>footer a,
+			body>footer a:visited,
+			body>footer a:hover{
+				color:#333;
+				display:inline-block;
+				vertical-align:middle;
+			}
+			@media print{
+				*{
+					border:0 !important;
+					background:#fff !important;
+					background-image:none !important;
+					color:#000 !important;
+					box-shadow:none !important;
+					text-shadow:none !important;
+				}
+				body{
+					max-width:95% !important;
+				}
+				footer{
+					margin-bottom:0 !important;
+				}
+				ul{
+					margin:0 !important;
+					padding;0 !important;
+				}
+				a[href^=http]:after{
+					content:' (' attr(href) ')';
+				}
+				nav,
+				#skip,
+				.tags,
+				.uses,
+				h1 a,
+				article a[href="#top"]{
+					display:none !important;
+				}
+				code{
+					page-break-inside:avoid;
+				}
+				article>h1{
+					page-break-after:avoid;
+				}
+				h1{
+					font-size:1.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Go Reflection Codex</h1>
+			<div id=skip>
+				<a href=#top>skip to navigation</a> |
+				<a href=#main>skip to articles</a>
+			</div>
+			<p>
+				<a href=http://golang.org title="Go project page">Go</a>'s
+				<a href=http://golang.org/pkg/reflect title="official docs">reflect</a>
+				package is powerful, it mirrors the semantics of the language
+				closely, and it is designed to be fast. Unfortunately,
+				the efficiency of it design does not lend its API to quick
+				discovery. This loose collection of short articles is offered
+				up as a learning aid and quick reference, in conjunction with
+				the standard documentation.
+			</p>
+			<p>
+				You should read at the very least the intro to the reflect
+				package and be familiar with the rules and concepts of
+				<a href=http://golang.org/ref/spec#Assignability title="Language specification">assignability</a>
+				and
+				<a href=http://golang.org/ref/spec#Address_operators title="Language specification">addressability</a>
+				in Go.
+			</p>
+			<p>
+				Each article contains some snippets of Go code followed
+				by the equivalent code using the reflect package.
+			</p>
+		</header>
+		<nav id=top role=navigation>
+			<ul>
+				<li id=by-title>
+					<h1>Table of Contents</h1>
+					<div class=pane>
+						
+							<a href=#access-a-field>Access a Field</a>
+						
+							<a href=#address>Address</a>
+						
+							<a href=#append>Append</a>
+						
+							<a href=#append-a-slice-to-a-slice>Append a slice to a slice</a>
+						
+							<a href=#assignment>Assignment</a>
+						
+							<a href=#asynchronous-communication>Asynchronous Communication</a>
+						
+							<a href=#capacity>Capacity</a>
+						
+							<a href=#close-a-channel>Close a channel</a>
+						
+							<a href=#copy>Copy</a>
+						
+							<a href=#creating-simple-composite-types>Creating simple composite types</a>
+						
+							<a href=#indexing>Indexing</a>
+						
+							<a href=#indirect>Indirect</a>
+						
+							<a href=#invoke-a-function>Invoke a function</a>
+						
+							<a href=#invoke-a-method>Invoke a method</a>
+						
+							<a href=#iteration>Iteration</a>
+						
+							<a href=#length>Length</a>
+						
+							<a href=#make>Make</a>
+						
+							<a href=#method-expression>Method expression</a>
+						
+							<a href=#new>New</a>
+						
+							<a href=#reslice>Reslice</a>
+						
+							<a href=#select>Select</a>
+						
+							<a href=#slice>Slice</a>
+						
+							<a href=#synchronous-communication>Synchronous Communication</a>
+						
+							<a href=#type-conversion>Type Conversion</a>
+						
+							<a href=#type-assert>Type assert</a>
+						
+							<a href=#type-switch>Type switch</a>
+						
+							<a href=#zero-value>Zero value</a>
+						
+					</div>
+				</li>
+				<li id=by-topic>
+					<h1>by Topic</h1>
+					<dl class=pane>
+						
+							<dt class=collapsible id=any-kind>Any kind</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#new>New</a></dd>
+							
+								<dd><a href=#type-conversion>Type Conversion</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+								<dd><a href=#zero-value>Zero value</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=array>Array</dt>
+							
+								<dd><a href=#capacity>Capacity</a></dd>
+							
+								<dd><a href=#copy>Copy</a></dd>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+								<dd><a href=#slice>Slice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=chan>Chan</dt>
+							
+								<dd><a href=#asynchronous-communication>Asynchronous Communication</a></dd>
+							
+								<dd><a href=#capacity>Capacity</a></dd>
+							
+								<dd><a href=#close-a-channel>Close a channel</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+								<dd><a href=#synchronous-communication>Synchronous Communication</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=func>Func</dt>
+							
+								<dd><a href=#invoke-a-function>Invoke a function</a></dd>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=interface>Interface</dt>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=map>Map</dt>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=method>Method</dt>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=pointers>Pointers</dt>
+							
+								<dd><a href=#address>Address</a></dd>
+							
+								<dd><a href=#indirect>Indirect</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=primitive-types>Primitive types</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=slice>Slice</dt>
+							
+								<dd><a href=#append>Append</a></dd>
+							
+								<dd><a href=#append-a-slice-to-a-slice>Append a slice to a slice</a></dd>
+							
+								<dd><a href=#capacity>Capacity</a></dd>
+							
+								<dd><a href=#copy>Copy</a></dd>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+								<dd><a href=#reslice>Reslice</a></dd>
+							
+								<dd><a href=#slice>Slice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=string>String</dt>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=struct>Struct</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+							</dt>
+						
+					</dl>
+				</li>
+				<li id=by-use>
+					<h1>by Use</h1>
+					<dl class=panel>
+						
+							<dt class=collapsible id=type-convertibleto>Type.ConvertibleTo</dt>
+							
+								<dd><a href=#type-conversion>Type Conversion</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=type-kind>Type.Kind</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=type-method>Type.Method</dt>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=type-methodbyname>Type.MethodByName</dt>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=type-nummethod>Type.NumMethod</dt>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-addr>Value.Addr</dt>
+							
+								<dd><a href=#address>Address</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-call>Value.Call</dt>
+							
+								<dd><a href=#invoke-a-function>Invoke a function</a></dd>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-callslice>Value.CallSlice</dt>
+							
+								<dd><a href=#invoke-a-function>Invoke a function</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-canaddr>Value.CanAddr</dt>
+							
+								<dd><a href=#address>Address</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-caninterface>Value.CanInterface</dt>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-canset>Value.CanSet</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-cap>Value.Cap</dt>
+							
+								<dd><a href=#capacity>Capacity</a></dd>
+							
+								<dd><a href=#reslice>Reslice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-elem>Value.Elem</dt>
+							
+								<dd><a href=#indirect>Indirect</a></dd>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-field>Value.Field</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-fieldbyindex>Value.FieldByIndex</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-fieldbyname>Value.FieldByName</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-index>Value.Index</dt>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-int>Value.Int</dt>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-interface>Value.Interface</dt>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-isnil>Value.IsNil</dt>
+							
+								<dd><a href=#indirect>Indirect</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-len>Value.Len</dt>
+							
+								<dd><a href=#length>Length</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-mapindex>Value.MapIndex</dt>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-mapkeys>Value.MapKeys</dt>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-method>Value.Method</dt>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-methodbyname>Value.MethodByName</dt>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-numfield>Value.NumField</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-nummethod>Value.NumMethod</dt>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-overflowfloat>Value.OverflowFloat</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-overflowint>Value.OverflowInt</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-overflowuint>Value.OverflowUint</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-recv>Value.Recv</dt>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#synchronous-communication>Synchronous Communication</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-send>Value.Send</dt>
+							
+								<dd><a href=#synchronous-communication>Synchronous Communication</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-set>Value.Set</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+								<dd><a href=#reslice>Reslice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setcomplex>Value.SetComplex</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setfloat>Value.SetFloat</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setint>Value.SetInt</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setlen>Value.SetLen</dt>
+							
+								<dd><a href=#reslice>Reslice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setmapindex>Value.SetMapIndex</dt>
+							
+								<dd><a href=#indexing>Indexing</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-setuint>Value.SetUint</dt>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-slice>Value.Slice</dt>
+							
+								<dd><a href=#slice>Slice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-tryrecv>Value.TryRecv</dt>
+							
+								<dd><a href=#asynchronous-communication>Asynchronous Communication</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-trysend>Value.TrySend</dt>
+							
+								<dd><a href=#asynchronous-communication>Asynchronous Communication</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=value-type>Value.Type</dt>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-append>reflect.Append</dt>
+							
+								<dd><a href=#append>Append</a></dd>
+							
+								<dd><a href=#append-a-slice-to-a-slice>Append a slice to a slice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-appendslice>reflect.AppendSlice</dt>
+							
+								<dd><a href=#append-a-slice-to-a-slice>Append a slice to a slice</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-array>reflect.Array</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-bothdir>reflect.BothDir</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-chan>reflect.Chan</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-chanof>reflect.ChanOf</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-copy>reflect.Copy</dt>
+							
+								<dd><a href=#copy>Copy</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-func>reflect.Func</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-indirect>reflect.Indirect</dt>
+							
+								<dd><a href=#indirect>Indirect</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-int>reflect.Int</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-interface>reflect.Interface</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-kind>reflect.Kind</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-makechan>reflect.MakeChan</dt>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-makemap>reflect.MakeMap</dt>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-makeslice>reflect.MakeSlice</dt>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-map>reflect.Map</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-mapof>reflect.MapOf</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-method>reflect.Method</dt>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-new>reflect.New</dt>
+							
+								<dd><a href=#new>New</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-ptr>reflect.Ptr</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-ptrto>reflect.PtrTo</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-recvdir>reflect.RecvDir</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-select>reflect.Select</dt>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-selectcase>reflect.SelectCase</dt>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-selectdefault>reflect.SelectDefault</dt>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-selectrecv>reflect.SelectRecv</dt>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-selectsend>reflect.SelectSend</dt>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-senddir>reflect.SendDir</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-slice>reflect.Slice</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-sliceof>reflect.SliceOf</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-struct>reflect.Struct</dt>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-type>reflect.Type</dt>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#make>Make</a></dd>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+								<dd><a href=#type-conversion>Type Conversion</a></dd>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+								<dd><a href=#zero-value>Zero value</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-value>reflect.Value</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+								<dd><a href=#address>Address</a></dd>
+							
+								<dd><a href=#append>Append</a></dd>
+							
+								<dd><a href=#assignment>Assignment</a></dd>
+							
+								<dd><a href=#close-a-channel>Close a channel</a></dd>
+							
+								<dd><a href=#creating-simple-composite-types>Creating simple composite types</a></dd>
+							
+								<dd><a href=#invoke-a-function>Invoke a function</a></dd>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+								<dd><a href=#iteration>Iteration</a></dd>
+							
+								<dd><a href=#method-expression>Method expression</a></dd>
+							
+								<dd><a href=#reslice>Reslice</a></dd>
+							
+								<dd><a href=#select>Select</a></dd>
+							
+								<dd><a href=#slice>Slice</a></dd>
+							
+								<dd><a href=#type-conversion>Type Conversion</a></dd>
+							
+								<dd><a href=#type-assert>Type assert</a></dd>
+							
+								<dd><a href=#type-switch>Type switch</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-valueof>reflect.ValueOf</dt>
+							
+								<dd><a href=#access-a-field>Access a Field</a></dd>
+							
+								<dd><a href=#append>Append</a></dd>
+							
+								<dd><a href=#invoke-a-function>Invoke a function</a></dd>
+							
+								<dd><a href=#invoke-a-method>Invoke a method</a></dd>
+							
+							</dt>
+						
+							<dt class=collapsible id=reflect-zero>reflect.Zero</dt>
+							
+								<dd><a href=#zero-value>Zero value</a></dd>
+							
+							</dt>
+						
+					</dl>
+				</li>
+			</ul>
+			<script>
+				"use strict";
+				function all(sel, func) {
+					
+					Array.prototype.slice.call(document.querySelectorAll(sel), 0).forEach(func);
+				}
+				function toggle(ev) {
+					dt(ev.target);
+				}
+				function dt(n) {
+					n.classList.toggle('collapsed');
+					for(n = n.nextSibling; n.nodeName != 'DT'; n = n.nextSibling) {
+						n.hidden = !n.hidden;
+					}
+				}
+				window.onhashchange = function() {
+					var n = document.querySelector(location.hash);
+					if(n['nodeName'] == 'DT') {
+						dt(n);
+					}
+				};
+				all('dd', function(dd) {
+					dd.hidden = true;
+				});
+				all('dt', function(dt) {
+					dt.classList.add('collapsed');
+					dt.addEventListener('click', toggle);
+				});
+			</script>
+		</nav>
+		<main id=main role=main>
+			<article id=access-a-field role=article>
+				<header>
+					<h1>Access a Field<a href=#access-a-field>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>Object.Field</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given an object with a field of a known name, use Value.FieldByName
+</p>
+						
+					
+						
+							<pre><code>obj := reflect.ValueOf(Object)
+field := obj.FieldByName(&#34;Field&#34;)</code></pre>
+						
+					
+						
+							<p> If Field were the 2nd field on obj, this would be equivalent:
+</p>
+						
+					
+						
+							<pre><code>field := obj.Field(1)</code></pre>
+						
+					
+						
+							<p> Value.Field will panic if there is no nth field, so use Value.NumField to
+ make sure that
+</p>
+						
+					
+						
+							<pre><code>n &lt; obj.NumField()</code></pre>
+						
+					
+						
+							<p> There is also a Value.FieldByIndex, which takes a slice of int&#39;s. For each int
+ in the slice, it calls Field on, first, the reflect.Value it was invoked on, and after that on the result of the last invocation of Field. So
+</p>
+						
+					
+						
+							<pre><code>obj.Field(1)</code></pre>
+						
+					
+						
+							<p>is equivalent to
+</p>
+						
+					
+						
+							<pre><code>obj.Field([]int{1})</code></pre>
+						
+					
+						
+							<p>and
+</p>
+						
+					
+						
+							<pre><code>obj.Field([]int{1, 2, 3})</code></pre>
+						
+					
+						
+							<p>is equivalent to
+</p>
+						
+					
+						
+							<pre><code>obj.Field(1).Field(2).Field(3)</code></pre>
+						
+					
+						
+							<p> FieldByIndex is primarily useful if you are keeping analysis of a type separate
+ from manipulation of values of that type. This is common, for example, in
+ serialization code that builds a table of what to serialize given a type and
+ then given a value looks the type up in a table and processes the entry using
+ the already computed recipe.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#struct>Struct</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-field>Value.Field</a></li><li><a href=#value-fieldbyname>Value.FieldByName</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#value-numfield>Value.NumField</a></li><li><a href=#value-fieldbyindex>Value.FieldByIndex</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=address role=article>
+				<header>
+					<h1>Address<a href=#address>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>v := &amp;value</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given a variable value of type reflect.Value.
+ </p>
+						
+					
+						
+							<pre><code>v := value.Addr()</code></pre>
+						
+					
+						
+							<p> Value.Addr will panic if value is not addressable. To check, use Value.CanAddr
+ </p>
+						
+					
+						
+							<pre><code>if value.CanAddr() {
+	v = value.Addr()
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#pointers>Pointers</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-canaddr>Value.CanAddr</a></li><li><a href=#value-addr>Value.Addr</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=append role=article>
+				<header>
+					<h1>Append<a href=#append>#</a></h1>
+					<p>Append to a slice.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>slice = append(slice, 1, 2)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>a := reflect.ValueOf(1)
+b := reflect.ValueOf(2)
+slice = reflect.Append(slice, a, b)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#reflect-append>reflect.Append</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=append-a-slice-to-a-slice role=article>
+				<header>
+					<h1>Append a slice to a slice<a href=#append-a-slice-to-a-slice>#</a></h1>
+					<p>The ... operator won&#39;t work on a reflected slice. Rather than iterating over the indices and appending them one at a time you can use reflect.AppendSlice.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>slice = append(slice, slice2...)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>slice = reflect.AppendSlice(slice, slice2)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-append>reflect.Append</a></li><li><a href=#reflect-appendslice>reflect.AppendSlice</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=assignment role=article>
+				<header>
+					<h1>Assignment<a href=#assignment>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>a = b</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>For a, b of reflect.Value
+ </p>
+						
+					
+						
+							<pre><code>a.Set(b)</code></pre>
+						
+					
+						
+							<p> To make sure this operation won&#39;t panic, use Value.CanSet
+ </p>
+						
+					
+						
+							<pre><code>if a.CanSet() {
+	a.Set(b)
+}</code></pre>
+						
+					
+						
+							<p> In addition to the generic Value.Set there are a number of type specific helper methods
+ on Value for primitive types and byte slices. Make sure that the type of a is
+ the appropriate type before calling.
+ </p>
+						
+					
+						
+							<pre><code>//bool
+a.SetBool(true)</code></pre>
+						
+					
+						
+							<pre><code>//byte slice
+a.SetBytes([]byte{})</code></pre>
+						
+					
+						
+							<pre><code>//string
+a.SetString(&#34;π≈3.1415&#34;)</code></pre>
+						
+					
+						
+							<p>   For the numeric types int, uint, float64, complex64, byte, int8, int16, etc, there are
+ methods on reflect.Value—Value.SetComplex, Value.SetFloat, Value.SetInt,
+ Value.SetUint— to set the largest of each category of numeric types; namely,
+ int64, uint64, float64, and complex128.
+ </p>
+						
+					
+						
+							<pre><code>a.SetComplex(1.3&#43;2i)</code></pre>
+						
+					
+						
+							<pre><code>a.SetFloat(3.14)</code></pre>
+						
+					
+						
+							<pre><code>a.SetInt(-1)</code></pre>
+						
+					
+						
+							<pre><code>a.SetUint(0)</code></pre>
+						
+					
+						
+							<p>    If the reflect.Value isn&#39;t an int64, uint64, float64, or complex128, it&#39;s possible
+ that the value being assigned will not fit. For example, assigning 65 000 to an int8.
+ </p>
+						
+					
+						
+							<p>To handle this possibility there are Value.OverlfowComplex, Value.OverflowFloat,
+ Value.OverflowInt, and Value.OverflowUint. In the following assume that b is an arbitrary value of the appropriate type
+ </p>
+						
+					
+						
+							<pre><code>if a.CanSet() &amp;&amp; !a.OverflowComplex(b) {
+	a.SetComplex(b)
+}</code></pre>
+						
+					
+						
+							<pre><code>if a.CanSet() &amp;&amp; !a.OverflowFloat(b) {
+	a.SetFloat(b)
+}</code></pre>
+						
+					
+						
+							<pre><code>if a.CanSet() &amp;&amp; !a.OverflowInt(b) {
+	a.SetInt(b)
+}</code></pre>
+						
+					
+						
+							<pre><code>if a.CanSet() &amp;&amp; !a.OverflowUint(b) {
+	a.SetUint(b)
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li><li><a href=#primitive-types>Primitive types</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-overflowint>Value.OverflowInt</a></li><li><a href=#value-canset>Value.CanSet</a></li><li><a href=#value-overflowuint>Value.OverflowUint</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-setcomplex>Value.SetComplex</a></li><li><a href=#value-setuint>Value.SetUint</a></li><li><a href=#value-setint>Value.SetInt</a></li><li><a href=#value-setfloat>Value.SetFloat</a></li><li><a href=#value-overflowfloat>Value.OverflowFloat</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=asynchronous-communication role=article>
+				<header>
+					<h1>Asynchronous Communication<a href=#asynchronous-communication>#</a></h1>
+					<p>Value.TryRecv and Value.TrySend are not technically in the language.</p><p>Value.TryRecv was in the language previous to Go 1, using the v, ok = &lt;-c syntax.</p><p>It was removed in favor of letting the ok denote whether the channel is closed.</p><p>Until Go 1.1, these were used to make up for a lack of there being a way to select on channels. However, even now that you can select with reflect, Value.TryRecv and Value.TrySend are still useful given how awkward doing selects are in reflect.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>ok := false
+select {
+case v := &lt;-c:
+	ok = true
+default:
+}</code></pre>
+						
+					
+						
+							<pre><code>ok := false
+select {
+case c &lt;- v:
+	ok = true
+default:
+}</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>v, ok := c.TryRecv()</code></pre>
+						
+					
+						
+							<pre><code>ok := c.TrySend(v)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#chan>Chan</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-trysend>Value.TrySend</a></li><li><a href=#value-tryrecv>Value.TryRecv</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=capacity role=article>
+				<header>
+					<h1>Capacity<a href=#capacity>#</a></h1>
+					<p>Use Value.Cap to get the capacity of an array, slice, or chan.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>cp := cap(v)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>cp := v.Cap()</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#array>Array</a></li><li><a href=#chan>Chan</a></li><li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-cap>Value.Cap</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=close-a-channel role=article>
+				<header>
+					<h1>Close a channel<a href=#close-a-channel>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>close(c)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>c.Close() //where c is a reflect.Value of a channel</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#chan>Chan</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=copy role=article>
+				<header>
+					<h1>Copy<a href=#copy>#</a></h1>
+					<p>Copying an array or slice.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>n := copy(dst, src)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>n := reflect.Copy(dst, src)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-copy>reflect.Copy</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=creating-simple-composite-types role=article>
+				<header>
+					<h1>Creating simple composite types<a href=#creating-simple-composite-types>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<p>Given a type T, creating a slice of T, a pointer to T, or a map to T
+ (with some key type K), creating an unnamed type is simple enough.
+ </p>
+						
+					
+						
+							<pre><code>type slice  []T</code></pre>
+						
+					
+						
+							<pre><code>type ptr    *T</code></pre>
+						
+					
+						
+							<pre><code>type bichan chan T
+type rchan  &lt;-chan T
+type schan  chan&lt;-T</code></pre>
+						
+					
+						
+							<pre><code>type a_map  map[K]T</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>With reflected types, unless you happen to have both a reflect.Value (or reflect.Type)
+ for T and []T (or *T or chan T)—or K and T and map[K]T—you have to create the type
+ with one of the following:
+ </p>
+						
+					
+						
+							<pre><code>slice  := reflect.SliceOf(T)</code></pre>
+						
+					
+						
+							<pre><code>ptr    := reflect.PtrTo(T)</code></pre>
+						
+					
+						
+							<pre><code>bichan := reflect.ChanOf(reflect.BothDir, T)
+rchan  := reflect.ChanOf(reflect.RecvDir, T)
+schan  := reflect.ChanOf(reflect.SendDir, T)</code></pre>
+						
+					
+						
+							<pre><code>a_map  := reflect.MapOf(K, T)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-recvdir>reflect.RecvDir</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-chanof>reflect.ChanOf</a></li><li><a href=#reflect-map>reflect.Map</a></li><li><a href=#reflect-sliceof>reflect.SliceOf</a></li><li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-mapof>reflect.MapOf</a></li><li><a href=#reflect-ptrto>reflect.PtrTo</a></li><li><a href=#reflect-bothdir>reflect.BothDir</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-senddir>reflect.SendDir</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=indexing role=article>
+				<header>
+					<h1>Indexing<a href=#indexing>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>v := indexable[index]</code></pre>
+						
+					
+						
+							<pre><code>indexable[index] = v</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Arrays and Slices are fairly similar and only require Value.Index
+ </p>
+						
+					
+						
+							<pre><code>//For an array or slice
+v := indexable.Index(index)
+indexable.Index(index).Set(v)</code></pre>
+						
+					
+						
+							<p> Maps require Value.MapIndex and Value.SetMapIndex
+ </p>
+						
+					
+						
+							<pre><code>//For a map
+v := indexable.MapIndex(index)
+indexable.SetMapIndex(index, value)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li><li><a href=#map>Map</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-index>Value.Index</a></li><li><a href=#value-set>Value.Set</a></li><li><a href=#value-setmapindex>Value.SetMapIndex</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=indirect role=article>
+				<header>
+					<h1>Indirect<a href=#indirect>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>v := *pointer</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>There are two ways: reflect.Indirect and Value.Elem. reflect.Indirect only
+ operates on pointers whereas Value.Elem works on pointers or interfaces.
+ </p>
+						
+					
+						
+							<p>Reflect.Indirect:
+ </p>
+						
+					
+						
+							<pre><code>v := reflect.Indirect(pointer)</code></pre>
+						
+					
+						
+							<p> Note: if pointer is nil, rather than panicing, reflect.Indirect will
+ return the zero value of the appropriate type.
+ </p>
+						
+					
+						
+							<p>Use Value.IsNil to check that pointer is not nil before indirection.
+ </p>
+						
+					
+						
+							<pre><code>if !pointer.IsNil() {
+	v = reflect.Indirect(pointer)
+}</code></pre>
+						
+					
+						
+							<p> Value.Elem:
+</p>
+						
+					
+						
+							<pre><code>v := pointer.Elem()</code></pre>
+						
+					
+						
+							<p> Like reflect.Indirect, Value.Elem returns the zero value if pointer is nil.
+ </p>
+						
+					
+						
+							<pre><code>if !pointer.IsNil() {
+	v = pointer.Elem()
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#pointers>Pointers</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-elem>Value.Elem</a></li><li><a href=#value-isnil>Value.IsNil</a></li><li><a href=#reflect-indirect>reflect.Indirect</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=invoke-a-function role=article>
+				<header>
+					<h1>Invoke a function<a href=#invoke-a-function>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>NoArgumentsOrReturns() //func()</code></pre>
+						
+					
+						
+							<pre><code>one, two := TwoParamsTwoReturns(&#34;hi&#34;, 0) //func(string, int) (int, error)</code></pre>
+						
+					
+						
+							<pre><code>ex := VariadicFunc(&#34;θ&#34;, 1, 2, 3) //func(string, ...int) bool</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>There are two ways to invoke a function: Value.Call and Value.CallSlice. The
+ latter is only for variadic functions; however, somewhat confusingly, both work
+ with variadic functions in exactly the same way: only use Value.CallSlice if,
+ for some reason, the function you wish to call MUST be variadic.
+ </p>
+						
+					
+						
+							<p>Both take and return a slice of reflect.Value.
+ </p>
+						
+					
+						
+							<p>Each of the parameters must be assignable to the respective argument.
+ </p>
+						
+					
+						
+							<p>For variadic functions, the variadic parameters are just the parameters in
+ the slice after the required parameters. So, if you were calling
+</p>
+						
+					
+						
+							<pre><code>func VariadicFunc(a string, more ...int)</code></pre>
+						
+					
+						
+							<p>the parameter slice must be one reflect.Value of a string followed by zero or
+ more reflect.Value&#39;s of int&#39;s.
+ </p>
+						
+					
+						
+							<pre><code>//func()
+f := reflect.ValueOf(NoArgumentOrReturns)
+f.Call(nil)	//returns a slice of length 0</code></pre>
+						
+					
+						
+							<pre><code>//func(string, int) (int, error)
+f := reflect.ValueOf(TwoParamsTwoReturns)
+v := f.Call([]reflect.Value{reflect.ValueOf(&#34;hi&#34;), reflect.ValueOf(0)})
+//len(v) == 2, v[0] is a reflected int, v[1] is a reflected error</code></pre>
+						
+					
+						
+							<pre><code>//func(string, ...int) bool
+v := f.Call([]reflect.Value{
+	reflect.ValueOf(&#34;θ&#34;), //this is the only required element
+	reflect.ValueOf(1),
+	reflect.ValueOf(2),
+	reflect.ValueOf(3),
+})
+//len(v) == 1 and v[0] is a reflected bool</code></pre>
+						
+					
+						
+							<p>   In the last example (and ONLY in the last example,) f.Call could be replaced
+ by f.CallSlice.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#func>Func</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#value-callslice>Value.CallSlice</a></li><li><a href=#value-call>Value.Call</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=invoke-a-method role=article>
+				<header>
+					<h1>Invoke a method<a href=#invoke-a-method>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>Object.Method()</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given an object with a method of a known name, use Value.MethodByName
+</p>
+						
+					
+						
+							<pre><code>obj := reflect.ValueOf(Object)
+obj.MethodByName(&#34;Method&#34;).Call(nil)</code></pre>
+						
+					
+						
+							<p> If Method is the 2nd method on obj, this is equivalent:
+</p>
+						
+					
+						
+							<pre><code>obj.Method(1).Call(nil)</code></pre>
+						
+					
+						
+							<p> Value.Method will panic if there is no nth method, so use Value.NumMethod to
+ make sure that
+</p>
+						
+					
+						
+							<pre><code>n &lt; obj.NumMethod()</code></pre>
+						
+					
+						
+							<p> Invoking a method is essentially the same as calling a function. See that section for more information on Value.Call.
+ </p>
+						
+					
+						
+							<p>The method&#39;s receiver will always be the reflect.Value that you called
+ Method or MethodByName on.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#func>Func</a></li><li><a href=#method>Method</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-call>Value.Call</a></li><li><a href=#value-nummethod>Value.NumMethod</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-method>Value.Method</a></li><li><a href=#reflect-valueof>reflect.ValueOf</a></li><li><a href=#value-methodbyname>Value.MethodByName</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=iteration role=article>
+				<header>
+					<h1>Iteration<a href=#iteration>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>for i := range iterable {
+	//body
+}</code></pre>
+						
+					
+						
+							<pre><code>for k, v := range iterable {
+	//body
+}</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>For arrays and slices simple iteration is straightforward.
+ </p>
+						
+					
+						
+							<pre><code>for i := 0; i &lt; iterable.Len(); i&#43;&#43; {
+	//body
+}</code></pre>
+						
+					
+						
+							<pre><code>for i := 0; i &lt; iterable.Len(); i&#43;&#43; {
+	v := iterable.Index(i)
+	//body
+}</code></pre>
+						
+					
+						
+							<p>  For maps, you must first call Value.MapKeys which returns a slice of reflect.Values
+ and use Value.MapIndex on the items of the slice to get the value of the map at that key.
+ </p>
+						
+					
+						
+							<pre><code>for _, key := range iterable.MapKeys() {
+	//body
+}</code></pre>
+						
+					
+						
+							<pre><code>for _, key := range iterable.MapKeys() {
+	v := iterable.MapIndex(key)
+	//body
+}</code></pre>
+						
+					
+						
+							<p>  Channels are more verbose. Value.Recv() returns a reflect.Value and a boolean where the
+ boolean is false if the reflected channel has been closed.
+ </p>
+						
+					
+						
+							<pre><code>for {
+	v, ok := iterable.Recv()
+	if !ok {
+		break
+	}
+	//body
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#map>Map</a></li><li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li><li><a href=#chan>Chan</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-mapindex>Value.MapIndex</a></li><li><a href=#value-recv>Value.Recv</a></li><li><a href=#value-mapkeys>Value.MapKeys</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=length role=article>
+				<header>
+					<h1>Length<a href=#length>#</a></h1>
+					<p>To get the length of an object that you can use with len, call Value.Len</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>ln := len(v)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>ln := v.Len()</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#array>Array</a></li><li><a href=#chan>Chan</a></li><li><a href=#map>Map</a></li><li><a href=#slice>Slice</a></li><li><a href=#string>String</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-len>Value.Len</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=make role=article>
+				<header>
+					<h1>Make<a href=#make>#</a></h1>
+					<p>For some types T and K:</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>//SLICE
+slice0 := []T{}
+//	or
+slice0 := make([]T)</code></pre>
+						
+					
+						
+							<pre><code>slice1 := make([]T, length)</code></pre>
+						
+					
+						
+							<pre><code>slice2 := make([]T, length, capacity)</code></pre>
+						
+					
+						
+							<pre><code>//MAP
+map0 := map[K]T{}
+//	or
+map0 := make(map[K]T)</code></pre>
+						
+					
+						
+							<pre><code>map1 := make(map[K]T, initial_capacity)</code></pre>
+						
+					
+						
+							<pre><code>//CHAN
+chan0 := make(chan T)</code></pre>
+						
+					
+						
+							<pre><code>chan1 := make(chan T, buffer_size)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Where the type S below is a reflect.Type of []T, map[K]T, or chan T, respectively.
+ </p>
+						
+					
+						
+							<pre><code>//SLICE
+slice0 := reflect.MakeSlice(S, 0, 0)</code></pre>
+						
+					
+						
+							<pre><code>slice1 := reflect.MakeSlice(S, length, length)</code></pre>
+						
+					
+						
+							<pre><code>slice2 := reflect.MakeSlice(S, length, capacity)</code></pre>
+						
+					
+						
+							<pre><code>//MAP
+map0 := reflect.MakeMap(S)</code></pre>
+						
+					
+						
+							<p>    There does not seem to be a way to make a map with an initial capacity via reflect.
+ Fortunately there is no specific need to do this.
+ </p>
+						
+					
+						
+							<pre><code>//CHAN
+chan0 := reflect.MakeChan(S, 0)</code></pre>
+						
+					
+						
+							<pre><code>chan1 := reflect.MakeChan(S, buffer_size)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#chan>Chan</a></li><li><a href=#map>Map</a></li><li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-makechan>reflect.MakeChan</a></li><li><a href=#reflect-makeslice>reflect.MakeSlice</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-makemap>reflect.MakeMap</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=method-expression role=article>
+				<header>
+					<h1>Method expression<a href=#method-expression>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<p>Given a type T with a method M,
+</p>
+						
+					
+						
+							<pre><code>m := T.M</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Unlike most entries in this codex, we are using reflect.Type
+ instead of reflect.Value. Given a reflect.Value you can use the Value.Type
+ method to get its reflect.Type value.
+ </p>
+						
+					
+						
+							<p>(Godoc tip: reflect.Type is an interface and the reflect package does not
+ export any values that satisfy it so click on reflect.Type itself to see what
+ you can do with it).
+ </p>
+						
+					
+						
+							<p>Like reflect.Value, reflect.Type has methods Type.NumMethod, Type.Method and
+ Type.MethodByName that behave analogously to the methods on reflect (cf.
+ Invoke a method) except they return values of reflect.Method and
+ Type.MethodByName also returns a bool indicating success, rather than panicing.
+ </p>
+						
+					
+						
+							<p>Type.Method is a struct but the actual value we&#39;re interested in in this case
+ is Method.Func
+ </p>
+						
+					
+						
+							<p>Given a reflect.Type T, we get the method M by
+</p>
+						
+					
+						
+							<pre><code>if M, ok := T.MethodByName(&#34;M&#34;); ok {
+	m = M.Func
+}</code></pre>
+						
+					
+						
+							<p>  If M is the 2nd method on T, this is equivalent:
+</p>
+						
+					
+						
+							<pre><code>M := T.Method(1).Func</code></pre>
+						
+					
+						
+							<p> Type.Method will panic if there is no nth method, so use Type.NumMethod to
+ make sure that
+</p>
+						
+					
+						
+							<pre><code>n &lt; obj.NumMethod()</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#method>Method</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-method>reflect.Method</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#value-type>Value.Type</a></li><li><a href=#type-method>Type.Method</a></li><li><a href=#type-methodbyname>Type.MethodByName</a></li><li><a href=#type-nummethod>Type.NumMethod</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=new role=article>
+				<header>
+					<h1>New<a href=#new>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>p := &amp;T{}
+//	or
+p := new(T)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>p := reflect.New(T)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-new>reflect.New</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=reslice role=article>
+				<header>
+					<h1>Reslice<a href=#reslice>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>s = s[:5] //where len(s) &lt; 5 but cap(s) &gt;= 5</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>s.SetLen(5)</code></pre>
+						
+					
+						
+							<p> Value.SetLen will panic if given a negative number or a number greater than
+ that returned by Value.Cap for the given slice or when called on a
+ reflect.Value of a nonslice.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-set>Value.Set</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#value-setlen>Value.SetLen</a></li><li><a href=#value-cap>Value.Cap</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=select role=article>
+				<header>
+					<h1>Select<a href=#select>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>select {
+case m1 := &lt;-c1:
+	...
+case c2 &lt;- m2:
+	...
+case m3, ok &lt;- c3:
+	...
+default:
+	...
+}</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given reflect.Value&#39;s matching c1, c2, c3, m2, as above, and named the same:
+</p>
+						
+					
+						
+							<pre><code>cases := []reflect.SelectCase{
+	{Dir: reflect.SelectRecv,   Chan: c1},
+	{Dir: reflect.SelectSend,   Chan: c2, Send: m2},
+	{Dir: reflect.SelectRecv,   Chan: c3},
+	{Dir: reflect.SelectDefault},
+}
+switch selected, recv, recvOK := reflect.Select(cases); selected {
+case 0:
+	//c1 was selected, recv is the value received
+	//we get recvOK whether we need it or not
+case 1:
+	//c2 was selected, therefore m2 was sent
+	//recv and recvOK are meaningless in this case
+case 2:
+	//c3 was selected, recv is the value received if recvOK == true
+	//recvOK is false if c3 is closed
+case 3:
+	//the default case
+	//recv and recvOK are meaningless in this case
+}</code></pre>
+						
+					
+						
+							<p>Selecting with reflect is a bit cumbersome, but in many ways more flexible
+ than the built in Go select statement as you can create very large dynamic
+ slices of reflected channels at runtime.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#chan>Chan</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-selectdefault>reflect.SelectDefault</a></li><li><a href=#reflect-selectcase>reflect.SelectCase</a></li><li><a href=#reflect-select>reflect.Select</a></li><li><a href=#reflect-selectsend>reflect.SelectSend</a></li><li><a href=#reflect-selectrecv>reflect.SelectRecv</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=slice role=article>
+				<header>
+					<h1>Slice<a href=#slice>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>sub0 := slice[2:5]</code></pre>
+						
+					
+						
+							<pre><code>sub1 := slice[:5]</code></pre>
+						
+					
+						
+							<pre><code>sub2 := slice[2:]</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Value.Slice handles slicing for reflect.Value&#39;s whose type is an array or slice.
+ </p>
+						
+					
+						
+							<pre><code>sub0 := slice.Slice(2, 5)</code></pre>
+						
+					
+						
+							<pre><code>sub1 := slice.Slice(0, 5)</code></pre>
+						
+					
+						
+							<pre><code>sub2 := slice.Slice(2, slice.Len())</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#array>Array</a></li><li><a href=#slice>Slice</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-slice>Value.Slice</a></li><li><a href=#reflect-value>reflect.Value</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=synchronous-communication role=article>
+				<header>
+					<h1>Synchronous Communication<a href=#synchronous-communication>#</a></h1>
+					<p>Value.Send and Value.Recv mirror the dual uses of the &lt;- operator.</p>
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>c &lt;- v</code></pre>
+						
+					
+						
+							<pre><code>v := &lt;-c</code></pre>
+						
+					
+						
+							<pre><code>c, ok := &lt;-c</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<pre><code>c.Send(x)</code></pre>
+						
+					
+						
+							<pre><code>v, _ := c.Recv()</code></pre>
+						
+					
+						
+							<pre><code>c, ok := c.Recv()</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#chan>Chan</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-send>Value.Send</a></li><li><a href=#value-recv>Value.Recv</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=type-conversion role=article>
+				<header>
+					<h1>Type Conversion<a href=#type-conversion>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>vp := T(v)</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given a reflect.Value, v, of some type, S, and a reflect.Type, T,
+ where values of type S can be converted to T in ordinary Go.
+</p>
+						
+					
+						
+							<pre><code>vp := v.Convert(T)</code></pre>
+						
+					
+						
+							<p> If you want to make sure that S is convertible to T use
+ Type.ConvertibleTo
+ </p>
+						
+					
+						
+							<pre><code>if S := v.Type(); S.ConvertibleTo(T) {
+	vp := v.Covert(T)
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-type>reflect.Type</a></li><li><a href=#type-convertibleto>Type.ConvertibleTo</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=type-assert role=article>
+				<header>
+					<h1>Type assert<a href=#type-assert>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>if v, ok := SomeInterface.(ConcreteType); ok {
+	...
+}</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>If you have a reflect.Type, T, of a noninterface type to check against, you can
+ use Value.Elem like so
+</p>
+						
+					
+						
+							<pre><code>if SomeReflected.Elem().Type() == T {
+	...
+}</code></pre>
+						
+					
+						
+							<p>Value.Elem will panic if SomeReflected is not an interface (or a pointer) and
+ will return the zero value of Elem().Type() if SomeReflected is nil.
+ </p>
+						
+					
+						
+							<p>Another tact is calling Value.Interface on a reflect.Value returns the unreflected value as an
+ interface{}.
+ </p>
+						
+					
+						
+							<pre><code>if v, ok := SomeReflected.Interface().(ConcreteType); ok {
+	...
+}</code></pre>
+						
+					
+						
+							<p> Value.Interface can panic if the reflect.Value is invalid or the value is
+ an unexported read only field.
+ </p>
+						
+					
+						
+							<p>Value.CanInterface allows you to check if the call is safe
+</p>
+						
+					
+						
+							<pre><code>if SomeReflected.CanInterface() {
+	if v, ok := SomeReflected.Interface().(ConcreteType) {
+		...
+	}
+}</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#interface>Interface</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#value-elem>Value.Elem</a></li><li><a href=#value-int>Value.Int</a></li><li><a href=#value-interface>Value.Interface</a></li><li><a href=#value-caninterface>Value.CanInterface</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-type>reflect.Type</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=type-switch role=article>
+				<header>
+					<h1>Type switch<a href=#type-switch>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<pre><code>switch v.(type) {
+	...
+}</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>Given a reflect.Value v:
+ </p>
+						
+					
+						
+							<pre><code>switch v.Type().Kind() {
+	...
+}</code></pre>
+						
+					
+						
+							<p> Type.Kind returns one of a set of constants defined under reflect.Kind. For
+ the primitive types, the type switch is normal. Special handling is needed for
+ each of reflect.Array, reflect.Chan, reflect.Func, reflect.Interface,
+ reflect.Map, reflect.Ptr, reflect.Slice, and reflect.Struct.
+</p>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li><li><a href=#primitive-types>Primitive types</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-map>reflect.Map</a></li><li><a href=#reflect-array>reflect.Array</a></li><li><a href=#reflect-chan>reflect.Chan</a></li><li><a href=#reflect-int>reflect.Int</a></li><li><a href=#reflect-kind>reflect.Kind</a></li><li><a href=#reflect-slice>reflect.Slice</a></li><li><a href=#reflect-interface>reflect.Interface</a></li><li><a href=#reflect-ptr>reflect.Ptr</a></li><li><a href=#type-kind>Type.Kind</a></li><li><a href=#reflect-struct>reflect.Struct</a></li><li><a href=#reflect-value>reflect.Value</a></li><li><a href=#reflect-func>reflect.Func</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article><article id=zero-value role=article>
+				<header>
+					<h1>Zero value<a href=#zero-value>#</a></h1>
+					
+				</header>
+				<section class=go role=region>
+					<h1>Go code:</h1>
+					
+						
+							<p>When not using reflect we generally know the type and hence
+ the zero value. Of course the simplest means is to declare a variable.
+</p>
+						
+					
+						
+							<pre><code>var v T</code></pre>
+						
+					
+				</section>
+				<section class=reflect role=region>
+					<h1>Equivalent reflect code:</h1>
+					
+						
+							<p>When you&#39;re using reflect and need a type&#39;s zero value you need to pass a value of
+ reflect.Type, say T, to reflect.Zero
+ </p>
+						
+					
+						
+							<pre><code>reflect.Zero(T)</code></pre>
+						
+					
+				</section>
+				<footer>
+					<ul class=tags>
+						<li><a href=#any-kind>Any kind</a></li>
+					</ul>
+					<ul class=uses>
+						<li><a href=#reflect-type>reflect.Type</a></li><li><a href=#reflect-zero>reflect.Zero</a></li>
+					</ul>
+					<a href=#top>top</a>
+				</footer>
+			</article>
+		</main>
+		<footer>
+			<a rel=license href=http://creativecommons.org/licenses/by-sa/3.0/deed.en_US
+				title="Creative Commons Attribution-ShareAlike 3.0 Unported License"><img alt="Creative Commons License"
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAALCAMAAADsveWiAAAAllBMVEUAAAANDQwNDQ0NDg0ODg4PEA8REREZGRkgICAhISEiIiIkJSMnKCcuMC4xMzEzMzM5Ozk7PTtBQkFCQkJDQ0NERERLTEtVVVVbXltmZmZna2dydnF3d3eAgIB9gn2GhoaHh4eIiIiPkI+UmZOZmZmqqqqrsaqzuLK7u7u6v7rFxsXGysbIzMjMzMzKzsrd3d3p6enq6uq8qbpVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVQoz52SaxeCIAyGl5qVXexGZtHF1HW1xv//c4Eo6qc47QCHM3j2bgNAZTtISBvzUsR3H36awlKvxiQ4Qbwf7LjFyGBUwBbxtbHi3ISKAJhgEBTEZjLRizqSUeQCejYOqrkj3CiIiHNfZDlxVyb6AH29HAZrnCW3h0KoxkShSpR7iNenCV8pkl7LHXX1WOwLnhF3unpGTrtaeugklPsQy/rCD62nnfpaXF2v4ebD//qZ9s6GW43t30925lRhy4Hdf/kCHuYpvVY9mFwAAAAASUVORK5CYII="
+			></a>
+			<a href=https://github.com/TODO/graphs/contibutors>Contributors</a> |
+			<a href=https://github.com/TODO/issues>Issue Queue</a> |
+			<a href=https://github.com/TODO>Project page</a>
+		</footer>
+	</body>
+</html>

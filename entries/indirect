@@ -1,0 +1,30 @@
+Indirect
+Pointers
+===
+	v := *pointer
+===
+There are two ways: reflect.Indirect and Value.Elem. reflect.Indirect only
+operates on pointers whereas Value.Elem works on pointers or interfaces.
+
+Reflect.Indirect:
+
+	v := reflect.Indirect(pointer)
+
+Note: if pointer is nil, rather than panicing, reflect.Indirect will
+return the zero value of the appropriate type.
+
+Use Value.IsNil to check that pointer is not nil before indirection.
+
+	if !pointer.IsNil() {
+		v = reflect.Indirect(pointer)
+	}
+
+Value.Elem:
+	v := pointer.Elem()
+
+Like reflect.Indirect, Value.Elem returns the zero value if pointer is nil.
+
+	if !pointer.IsNil() {
+		v = pointer.Elem()
+	}
+

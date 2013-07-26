@@ -1,0 +1,8 @@
+Close a channel
+Chan
+
+==
+	close(c)
+
+==
+	c.Close() //where c is a reflect.Value of a channel

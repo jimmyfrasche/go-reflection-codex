@@ -1,0 +1,9 @@
+Length
+Array, Chan, Map, Slice, String
+
+To get the length of an object that you can use with len, call Value.Len
+
+===
+	ln := len(v)
+==
+	ln := v.Len()

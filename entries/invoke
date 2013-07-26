@@ -1,0 +1,44 @@
+Invoke a function
+Func
+===
+	NoArgumentsOrReturns() //func()
+
+	one, two := TwoParamsTwoReturns("hi", 0) //func(string, int) (int, error)
+
+	ex := VariadicFunc("θ", 1, 2, 3) //func(string, ...int) bool
+===
+There are two ways to invoke a function: Value.Call and Value.CallSlice. The
+latter is only for variadic functions; however, somewhat confusingly, both work
+with variadic functions in exactly the same way: only use Value.CallSlice if,
+for some reason, the function you wish to call MUST be variadic.
+
+Both take and return a slice of reflect.Value.
+
+Each of the parameters must be assignable to the respective argument.
+
+For variadic functions, the variadic parameters are just the parameters in
+the slice after the required parameters. So, if you were calling
+	func VariadicFunc(a string, more ...int)
+the parameter slice must be one reflect.Value of a string followed by zero or
+more reflect.Value's of int's.
+
+	//func()
+	f := reflect.ValueOf(NoArgumentOrReturns)
+	f.Call(nil)	//returns a slice of length 0
+
+	//func(string, int) (int, error)
+	f := reflect.ValueOf(TwoParamsTwoReturns)
+	v := f.Call([]reflect.Value{reflect.ValueOf("hi"), reflect.ValueOf(0)})
+	//len(v) == 2, v[0] is a reflected int, v[1] is a reflected error
+
+	//func(string, ...int) bool
+	v := f.Call([]reflect.Value{
+		reflect.ValueOf("θ"), //this is the only required element
+		reflect.ValueOf(1),
+		reflect.ValueOf(2),
+		reflect.ValueOf(3),
+	})
+	//len(v) == 1 and v[0] is a reflected bool
+
+In the last example (and ONLY in the last example,) f.Call could be replaced
+by f.CallSlice.

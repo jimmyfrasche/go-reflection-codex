@@ -1,0 +1,19 @@
+The first line is the title.
+
+The second line is a CSV list of tags.
+
+The remaining lines are three sections divided by a line starting with  "==".
+
+The first section is the plain text description.
+
+The second section is the plain Go code.
+
+The third section is the reflect code equivalent to that in the second section.
+
+In each of section two and three, anything tab indented code and anything not so
+indented is considered explanatory text.
+
+When using methods make sure to include the type of the method, in Type.Method,
+somewhere in the text so that the 'by use' contents can be correctly built.
+Similiarly when using top level declarations from the reflect package, qualify
+with package, such as reflect.Value

@@ -1,0 +1,31 @@
+Creating simple composite types
+Any kind
+==
+Given a type T, creating a slice of T, a pointer to T, or a map to T
+(with some key type K), creating an unnamed type is simple enough.
+
+	type slice  []T
+
+	type ptr    *T
+
+	type bichan chan T
+	type rchan  <-chan T
+	type schan  chan<-T
+
+	type a_map  map[K]T
+==
+
+With reflected types, unless you happen to have both a reflect.Value (or reflect.Type)
+for T and []T (or *T or chan T)—or K and T and map[K]T—you have to create the type
+with one of the following:
+
+	slice  := reflect.SliceOf(T)
+
+	ptr    := reflect.PtrTo(T)
+
+	bichan := reflect.ChanOf(reflect.BothDir, T)
+	rchan  := reflect.ChanOf(reflect.RecvDir, T)
+	schan  := reflect.ChanOf(reflect.SendDir, T)
+
+	a_map  := reflect.MapOf(K, T)
+

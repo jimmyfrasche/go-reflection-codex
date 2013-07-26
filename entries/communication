@@ -1,0 +1,19 @@
+Synchronous Communication
+Chan
+
+Value.Send and Value.Recv mirror the dual uses of the <- operator.
+
+==
+
+	c <- v
+
+	v := <-c
+
+	c, ok := <-c
+
+==
+	c.Send(x)
+
+	v, _ := c.Recv()
+
+	c, ok := c.Recv()

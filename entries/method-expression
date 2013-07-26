@@ -1,0 +1,36 @@
+Method expression
+Method
+===
+Given a type T with a method M,
+	m := T.M
+===
+Unlike most entries in this codex, we are using reflect.Type
+instead of reflect.Value. Given a reflect.Value you can use the Value.Type
+method to get its reflect.Type value.
+
+(Godoc tip: reflect.Type is an interface and the reflect package does not
+export any values that satisfy it so click on reflect.Type itself to see what
+you can do with it).
+
+Like reflect.Value, reflect.Type has methods Type.NumMethod, Type.Method and
+Type.MethodByName that behave analogously to the methods on reflect (cf.
+Invoke a method) except they return values of reflect.Method and
+Type.MethodByName also returns a bool indicating success, rather than panicing.
+
+Type.Method is a struct but the actual value we're interested in in this case
+is Method.Func
+
+Given a reflect.Type T, we get the method M by
+	if M, ok := T.MethodByName("M"); ok {
+		m = M.Func
+	}
+
+
+If M is the 2nd method on T, this is equivalent:
+	M := T.Method(1).Func
+
+Type.Method will panic if there is no nth method, so use Type.NumMethod to
+make sure that
+	n < obj.NumMethod()
+
+

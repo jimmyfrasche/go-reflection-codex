@@ -1,0 +1,38 @@
+Select
+Chan
+===
+	select {
+	case m1 := <-c1:
+		...
+	case c2 <- m2:
+		...
+	case m3, ok <- c3:
+		...
+	default:
+		...
+	}
+===
+Given reflect.Value's matching c1, c2, c3, m2, as above, and named the same:
+	cases := []reflect.SelectCase{
+		{Dir: reflect.SelectRecv,   Chan: c1},
+		{Dir: reflect.SelectSend,   Chan: c2, Send: m2},
+		{Dir: reflect.SelectRecv,   Chan: c3},
+		{Dir: reflect.SelectDefault},
+	}
+	switch selected, recv, recvOK := reflect.Select(cases); selected {
+	case 0:
+		//c1 was selected, recv is the value received
+		//we get recvOK whether we need it or not
+	case 1:
+		//c2 was selected, therefore m2 was sent
+		//recv and recvOK are meaningless in this case
+	case 2:
+		//c3 was selected, recv is the value received if recvOK == true
+		//recvOK is false if c3 is closed
+	case 3:
+		//the default case
+		//recv and recvOK are meaningless in this case
+	}
+Selecting with reflect is a bit cumbersome, but in many ways more flexible
+than the built in Go select statement as you can create very large dynamic
+slices of reflected channels at runtime.

@@ -1,0 +1,46 @@
+Make
+Chan, Map, Slice
+
+For some types T and K:
+==
+
+	//SLICE
+	slice0 := []T{}
+	//	or
+	slice0 := make([]T)
+
+	slice1 := make([]T, length)
+
+	slice2 := make([]T, length, capacity)
+
+	//MAP
+	map0 := map[K]T{}
+	//	or
+	map0 := make(map[K]T)
+
+	map1 := make(map[K]T, initial_capacity)
+
+	//CHAN
+	chan0 := make(chan T)
+
+	chan1 := make(chan T, buffer_size)
+==
+Where the type S below is a reflect.Type of []T, map[K]T, or chan T, respectively.
+
+	//SLICE
+	slice0 := reflect.MakeSlice(S, 0, 0)
+
+	slice1 := reflect.MakeSlice(S, length, length)
+
+	slice2 := reflect.MakeSlice(S, length, capacity)
+
+	//MAP
+	map0 := reflect.MakeMap(S)
+
+There does not seem to be a way to make a map with an initial capacity via reflect.
+Fortunately there is no specific need to do this.
+
+	//CHAN
+	chan0 := reflect.MakeChan(S, 0)
+
+	chan1 := reflect.MakeChan(S, buffer_size)

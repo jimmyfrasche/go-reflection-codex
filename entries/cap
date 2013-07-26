@@ -1,0 +1,9 @@
+Capacity
+Array, Chan, Slice
+
+Use Value.Cap to get the capacity of an array, slice, or chan.
+
+===
+	cp := cap(v)
+==
+	cp := v.Cap()
