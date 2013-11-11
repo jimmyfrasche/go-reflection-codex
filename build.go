@@ -16,7 +16,7 @@ func init() {
 	log.SetFlags(0)
 }
 
-const dir = "/home/jimmy/code/go/src/github.com/JImmyFrasche/go-reflection-codex"
+const dir = "/home/jimmy/code/go/src/github.com/jimmyfrasche/go-reflection-codex"
 
 func mksorter(of map[string]*Articles) func(string) *Articles {
 	return func(key string) *Articles {
